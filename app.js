@@ -31,8 +31,9 @@ app.post('/tasks',
       done: Boolean(req.body.done),
       createdAt: Date().toLocaleString()
     }
-    tasks.push(item);
-    res.send(tasks);
+    const data = JSON.stringify(item);
+    fs.writeFileSync('data.json', data);
+    res.send(data);
   }
 
 });
