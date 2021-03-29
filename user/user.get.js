@@ -1,4 +1,4 @@
-const { parse } = require('dotenv/types');
+
 const express = require('express');
 const Router = express.Router();
 const fs = require('fs');
@@ -11,24 +11,24 @@ const get = Router.get('/', (req, res) => {
   let newTasks = [];
 
   switch(req.query.sort) {
-    case "asc": 
+    case 'asc': 
       newTasks = parsedTasks;
       break;
-    case "desc":
+    case 'desc':
       newTasks = parsedTasks.reverse();
       break;
     default: newTasks = parsedTasks; 
       break;
   }
-
+   
   switch(req.query.filterBy) {
-    case "done":
+    case 'done':
       newTasks = parsedTasks.filter(e => e.done === true);
       break;
-    case "undone":
+    case 'undone':
       newTasks = parsedTasks.filter(e => e.done === false)
-    default: newTasks = parsedTasks;
-      break;
+    default: 
+      break; 
   }
 
 
