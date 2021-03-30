@@ -21,7 +21,7 @@ const post = Router.post('/',
   check('name')
   .isLength({min: 2})
   .withMessage('Must be at least 2 char long'),
-  body('done').isBgitoolean(), 
+  body('done').isBoolean(), 
   body('name').isString().trim(),
   (req, res) => {
   const errors = validationResult(req);
