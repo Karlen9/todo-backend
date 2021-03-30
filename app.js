@@ -11,7 +11,7 @@ const initialFileArray = JSON.stringify([]);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(cors())
+app.use(cors());
 app.use('/task', require('./user/user.post'));
 app.use('/task', require('./user/user.delete'));
 app.use('/tasks', require('./user/user.get'));

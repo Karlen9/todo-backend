@@ -5,6 +5,8 @@ const fs = require('fs');
 const dataFile = './data.json';
 
 
+
+
 const get = Router.get('/', (req, res) => {
   let tasks = fs.readFileSync(dataFile, 'utf-8');
   const parsedTasks = JSON.parse(tasks);
