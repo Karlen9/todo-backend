@@ -22,6 +22,9 @@ const get = Router.get('/', (req, res) => {
   }
    
   switch(req.query.filterBy) {
+    case 'all':
+      newTasks = parsedTasks;
+      break;
     case 'done':
       newTasks = parsedTasks.filter(e => e.done === true);
       break;
