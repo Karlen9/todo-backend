@@ -9,6 +9,7 @@ const { body, validationResult, check } = require('express-validator');
 const patch = Router.patch('/:id',
 
     body('name').optional().isString(),
+    //Typo edit
     body('done').optional().isBoolean(), 
     (req, res) => {     
     const errors = validationResult(req);
