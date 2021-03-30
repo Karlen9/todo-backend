@@ -15,8 +15,10 @@ app.use('/task', require('./user/user.delete'));
 app.use('/tasks', require('./user/user.get'));
 app.use('/task', require('./user/user.patch'));
 
-fs.openSync(filePath, 'w');
-fs.writeFileSync(filePath, []);
+fs.appendFile('data.json', [], (err) => {
+  if (err) throw err;
+  console.log('Saved!');
+});
 
 
 app.listen(process.env.PORT || 3000, () => {
