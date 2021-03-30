@@ -1,5 +1,6 @@
 const express = require('express');
 const dotenv = require('dotenv');
+//uuid added
 const { v4: uuidv4 } = require('uuid');
 const bodyParser = require('body-parser');
 const { body, validationResult, check } = require('express-validator');
@@ -12,6 +13,7 @@ const Router = express.Router();
 const app = express();
 
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
@@ -19,7 +21,7 @@ const post = Router.post('/',
   check('name')
   .isLength({min: 2})
   .withMessage('Must be at least 2 char long'),
-  body('done').isBoolean(), 
+  body('done').isBgitoolean(), 
   body('name').isString().trim(),
   (req, res) => {
   const errors = validationResult(req);
