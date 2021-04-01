@@ -1,0 +1,40 @@
+{
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "dotenv-types": "^1.0.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.10.0",
+    "heroku": "^7.51.0",
+    "node": "^15.12.0",
+    "path": "^0.12.7",
+    "pg": "^8.5.1",
+    "sequelize": "^6.6.2",
+    "uniqid": "^5.3.0",
+    "uuid": "^8.3.2"
+  },
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "nodemon ./app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Karlen9/todo-react-backend.git"
+  },
+  "keywords": [],
+  "author": "Karlen Misakyan",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Karlen9/todo-react-backend/issues"
+  },
+  "homepage": "https://github.com/Karlen9/todo-react-backend#readme",
+  "description": "",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}
