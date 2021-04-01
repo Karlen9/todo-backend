@@ -1,10 +1,7 @@
 const fs = require('fs');
 const express = require('express');
 const Router = express.Router();
-const { json } = require('body-parser');
-const dataFile = './data.json';
-const { body, validationResult, check } = require('express-validator');
- 
+const { body, validationResult } = require('express-validator');
 
 const patch = Router.patch('/:id',
 

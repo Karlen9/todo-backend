@@ -2,16 +2,12 @@
 const express = require('express');
 const Router = express.Router();
 const fs = require('fs');
-const dataFile = './data.json';
-const db = require('../models');
-
-
-
+const { Task } = require('../models');
 
 const get = Router.get('/', async (req, res) => {
-  const tasks = await Task.finAll({
+  const tasks = await Task.findAll(
     
-  })
+  )
   
   //let tasks = fs.readFileSync(dataFile, 'utf-8');
   //const parsedTasks = JSON.parse(tasks);

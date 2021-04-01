@@ -3,7 +3,6 @@ const dotenv = require('dotenv');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 const { fileURLToPath } = require('url');
-const filePath = './data.json'
 const cors = require('cors');
 
 const app = express();
@@ -20,20 +19,20 @@ db.sequelize.sync().then((req) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cors());
-app.use('/task', require('./user/user.post'));
-app.use('/task', require('./user/user.delete'));
-app.use('/tasks', require('./user/user.get'));
-app.use('/task', require('./user/user.patch'));
+app.use('/task', require('./task/task.post'));
+app.use('/task', require('./task/task.delete'));
+app.use('/tasks', require('./task/task.get'));
+app.use('/task', require('./task/task.patch'));
 
-if (fs.existsSync(filePath)){
-  console.log('Path exists');
-} else {
-  fs.open(filePath, 'w', (error) => {
-    console.log(error);
-  });
-  fs.writeFileSync(filePath, initialFileArray);
+// if (fs.existsSync(filePath)){
+//   console.log('Path exists');
+// } else {
+//   fs.open(filePath, 'w', (error) => {
+//     console.log(error);
+//   });
+//   fs.writeFileSync(filePath, initialFileArray);
 
-}
+// }
 
 
 
