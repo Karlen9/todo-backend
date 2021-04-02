@@ -21,14 +21,19 @@ const post = Router.post('/',
 
   } else {
     try {
-
-      const task = await Task.create({
-        name: req.body.name,
-        id: uuidv4(),
-        done: req.body.done
-      })
+      const item = await Task.findOne({ where: {name: req.body.name} });
+      if(!item) {
+        const task = await Task.create({
+          name: req.body.name,
+          id: uuidv4(),
+          done: req.body.done
+        })
       res.send(task);  
+
+      } else throw new Error('Task exists');
+      
     } catch (error) {
+      res.status(400).json(error.message);
       console.log(error);
     }
   }
