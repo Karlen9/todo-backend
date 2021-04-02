@@ -33,7 +33,6 @@ const post = Router.post('/',
     })
     res.send(task);  
 
-    
   } catch (error) {
     res.status(400).json(error.message);
     console.log(error);
