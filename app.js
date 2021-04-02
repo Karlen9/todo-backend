@@ -10,7 +10,7 @@ const app = express();
 
 const db = require('./models');
 
-db.sequelize.sync().then((req) => {
+db.sequelize.sync().then(() => {
   app.listen(process.env.PORT || 3000, () => {
     console.log('start');
   });

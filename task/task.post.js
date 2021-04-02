@@ -15,7 +15,6 @@ const post = Router.post('/',
   async (req, res) => {
   const errors = validationResult(req);
 
-  
   if(!errors.isEmpty()) {
     console.log(errors.array()[0].msg);
     return res.status(400).json({ errors: errors.array()[0].msg });
@@ -24,18 +23,15 @@ const post = Router.post('/',
     try {
 
       const task = await Task.create({
-        id: uuidv4(),
         name: req.body.name,
-        done: req.body.done,
-        date:Date().toLocaleString()
+        id: uuidv4(),
+        done: req.body.done
       })
       res.send(task);  
     } catch (error) {
       console.log(error);
     }
   }
-
 });
-
 
 module.exports = post;
