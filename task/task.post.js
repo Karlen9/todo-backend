@@ -23,7 +23,7 @@ const post = Router.post('/',
   try {
     const item = await Task.findOne({ where: {name: req.body.name} });
     if(item) {
-      throw new Error('Task exists');
+      throw new Error('Task is already in use');
     }
     
     const task = await Task.create({

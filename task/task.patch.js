@@ -14,16 +14,24 @@ const patch = Router.patch('/:id',
         return res.status(400).json({ errors: errors.array()[0].msg });
     } 
 
-    const task = await Task.update({ 
-        name: req.body.name,
-        done: req.body.done
-    }, {
-        where: { id: req.params.id },
-        returning: true,
-        plain: true
-    });
+    try {
+        const existingTask = await Task.findOne({ where: {name: req.body.name} });
+        if (existingTask) throw new Error('Task name already in use');
 
-    res.send(task); 
+        const task = await Task.update({ 
+            name: req.body.name,
+            done: req.body.done
+        }, {
+            where: { id: req.params.id },
+            returning: true,
+            plain: true
+        });
+
+        res.send(task); 
+    } catch(error) {
+        res.status(400).json(error.message);
+    }
+    
 
 });
 
