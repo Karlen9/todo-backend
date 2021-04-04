@@ -36,6 +36,7 @@
   "homepage": "https://github.com/Karlen9/todo-react-backend#readme",
   "description": "",
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "sequelize-cli": "^6.2.0"
   }
 }
