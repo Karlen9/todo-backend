@@ -1,8 +1,6 @@
 const express = require('express');
-const dotenv = require('dotenv');
 const { v4: uuidv4 } = require('uuid');
 const { body, validationResult, check } = require('express-validator');
-const fs = require('fs');
 const { Task } = require('../models');
 const Router = express.Router();
 
