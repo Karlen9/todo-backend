@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "postgres",
-    "password": "user",
-    "database": "todos",
-    "host": "localhost",
+    "username": "hgkyrsaoqjhlxy",
+    "password": "dd66838b684e4bf659f3ab0aa1b88b7174f9fa4c79613e28c26da5bb9c6517b0",
+    "database": "daca306506ebnl",
+    "host": "ec2-54-155-87-214.eu-west-1.compute.amazonaws.com",
     "dialect": "postgres"
   }
 }
