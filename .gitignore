@@ -1,3 +1,8 @@
 node_modules
 .env
+<<<<<<< HEAD
 ./data.json
+=======
+./data.json
+./database.sql
+>>>>>>> database
