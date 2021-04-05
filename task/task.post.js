@@ -1,5 +1,4 @@
 const express = require("express");
-const { v4: uuidv4 } = require("uuid");
 const { body, validationResult, check } = require("express-validator");
 const { Item } = require("../models");
 const Router = express.Router();

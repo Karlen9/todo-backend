@@ -5,9 +5,6 @@ const cors = require("cors");
 
 const app = express();
 
-const db = require("./models");
-const { sequelize } = require("./models");
-
 app.listen(process.env.PORT || 3000, () => {
   console.log("start");
 });
