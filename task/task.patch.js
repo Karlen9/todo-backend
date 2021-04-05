@@ -1,7 +1,7 @@
 const express = require("express");
 const Router = express.Router();
 const { body, validationResult } = require("express-validator");
-const { Task } = require("../models");
+const { Item } = require("../models");
 
 const patch = Router.patch(
   "/:id",
@@ -16,12 +16,12 @@ const patch = Router.patch(
     }
 
     try {
-      const existingTask = await Task.findOne({
+      const existingTask = await Item.findOne({
         where: { name: req.body.name },
       });
       if (existingTask) throw new Error("Task name already in use");
 
-      const task = await Task.update(
+      const task = await Item.update(
         {
           name: req.body.name,
           done: req.body.done,
