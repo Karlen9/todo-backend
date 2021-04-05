@@ -1,4 +1,4 @@
-# todo-react-backend
+# todo-backend
 This is 4  endpoint for connect your ToDo application with server.
 
 
