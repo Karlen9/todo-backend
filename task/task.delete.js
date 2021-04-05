@@ -5,7 +5,7 @@ const { Item } = require("../models");
 const deleteTask = Router.delete("/:id", async (req, res) => {
   const deletingTask = await Item.destroy({ where: { id: req.params.id } });
 
-  res.send(deletingTask);
+  res.send("Task has deleted");
 });
 
 module.exports = deleteTask;
