@@ -8,6 +8,7 @@ const post = Router.post(
   "/",
   body("done").optional(),
   body("name").optional().isString(),
+  check("name").isAlpha().withMessage("Must be Alphabetic"),
   check("name")
     .isLength({ min: 2, max: 30 })
     .withMessage("Must be at least 2 char long"),
