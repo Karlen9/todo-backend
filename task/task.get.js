@@ -10,8 +10,8 @@ const get = Router.get("/", async (req, res) => {
   const tasks = await Item.findAndCountAll({
     where: filter.done,
     order: sort,
-    limit: 5,
-    offset: (req.query.page - 1) * 5,
+    //limit: 5,
+    //offset: (req.query.page - 1) * 5,
   });
 
   res.send(tasks);
