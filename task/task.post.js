@@ -26,7 +26,6 @@ const post = Router.post(
 
       const task = await Item.create({
         name: req.body.name,
-        id: uuidv4(),
         done: req.body.done,
       });
       res.send(task);
