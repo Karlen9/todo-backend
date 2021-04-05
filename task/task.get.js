@@ -8,8 +8,8 @@ const get = Router.get("/", async (req, res) => {
   if (req.query.filterBy) filter = { done: req.query.filterBy };
   if (req.query.sort) sort = ["createdAt", req.query.sort];
   const tasks = await Item.findAndCountAll({
-    where: filter.done,
-    order: sort,
+    where: filter,
+    order: sort[1],
     limit: 5,
     offset: (req.query.page - 1) * 5,
   });
