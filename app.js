@@ -9,9 +9,9 @@ app.listen(process.env.PORT || 3001, () => {
   console.log("start");
 });
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(cors());
 app.use("/task", require("./task/task.post"));
 app.use("/task", require("./task/task.delete"));
 app.use("/tasks", require("./task/task.get"));
