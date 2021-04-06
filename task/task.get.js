@@ -4,29 +4,20 @@ const { Item } = require("../models");
 
 const get = Router.get("/", async (req, res) => {
   let sort = [];
+  let filter = {};
   const fiveElOffset = (req.query.page - 1) * 5;
   const amountOfElementsOnPage = 5;
 
   if (req.query.sort) sort = ["createdAt", req.query.sort];
 
-  let tasks = await Item.findAndCountAll();
+  if (req.query.filterBy) filter = { done: req.query.filterBy };
 
-  if (req.query.filterBy) {
-    tasks = await Item.findAndCountAll({
-      where: {
-        done: req.query.filterBy,
-      },
-      order: [sort],
-      limit: amountOfElementsOnPage,
-      offset: fiveElOffset,
-    });
-  } else if (!req.body.filterBy) {
-    tasks = await Item.findAndCountAll({
-      order: [sort],
-      limit: amountOfElementsOnPage,
-      offset: fiveElOffset,
-    });
-  }
+  const tasks = await Item.findAndCountAll({
+    where: filter,
+    order: [sort],
+    limit: amountOfElementsOnPage,
+    offset: fiveElOffset,
+  });
 
   res.send(tasks);
 });
