@@ -19,7 +19,7 @@ const get = Router.get("/", async (req, res) => {
     offset: fiveElOffset,
   });
 
-  res.send(tasks);
+  res.send(tasks.rows);
 });
 
 module.exports = get;
