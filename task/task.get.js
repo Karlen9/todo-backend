@@ -4,6 +4,7 @@ const { Item } = require("../models");
 
 const get = Router.get("/", async (req, res) => {
   let sort = [];
+  const fiveElOffset = (req.query.page - 1) * 5;
 
   if (req.query.sort) sort = ["createdAt", req.query.sort];
 
@@ -14,13 +15,13 @@ const get = Router.get("/", async (req, res) => {
       },
       order: [sort],
       limit: 5,
-      offset: (req.query.page - 1) * 5,
+      offset: fiveElOffset,
     });
   } else if (!req.body.filterBy) {
     tasks = await Item.findAndCountAll({
       order: [sort],
       limit: 5,
-      offset: (req.query.page - 1) * 5,
+      offset: fiveElOffset,
     });
   }
 
