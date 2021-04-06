@@ -3,7 +3,7 @@ const Router = express.Router();
 const { Item } = require("../models");
 
 const get = Router.get("/", async (req, res) => {
-  let sort = [];
+  let sort = ["createdAt", "asc"];
   let filter = {};
   const fiveElOffset = (req.query.page - 1) * 5;
   const amountOfElementsOnPage = 5;
