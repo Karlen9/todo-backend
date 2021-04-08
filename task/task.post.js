@@ -7,8 +7,10 @@ const post = Router.post(
   "/",
   body("done").optional(),
   body("name").optional().isString(),
-  check("name").isAlpha().withMessage("Must be Alphabetic"),
   check("name")
+    .isAscii()
+    .trim()
+    .withMessage("Task must contains alphabets or numbers")
     .isLength({ min: 2, max: 30 })
     .withMessage("Must be at least 2 char long"),
   async (req, res) => {
@@ -21,16 +23,16 @@ const post = Router.post(
     try {
       const item = await Item.findOne({ where: { name: req.body.name } });
       if (item) {
-        throw new Error("Task is already in use");
+        throw new Error("Task name is already in use");
       }
 
       const task = await Item.create({
-        name: req.body.name,
+        name: req.body.name.trim(),
         done: req.body.done,
       });
       res.send(task);
     } catch (error) {
-      res.status(400).json(error.message);
+      res.status(400).json({ error: error.message });
       console.log(error);
     }
   }

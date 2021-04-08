@@ -8,7 +8,7 @@ const get = Router.get("/", async (req, res) => {
   const fiveElOffset = (req.query.page - 1) * 5;
   const amountOfElementsOnPage = 5;
 
-  if (req.query.sort) sort = ["createdAt", req.query.sort];
+  if (req.query.order) sort = ["createdAt", req.query.order];
 
   if (req.query.filterBy) filter = { done: req.query.filterBy };
 
@@ -18,8 +18,8 @@ const get = Router.get("/", async (req, res) => {
     limit: amountOfElementsOnPage,
     offset: fiveElOffset,
   });
-
-  res.send(tasks.rows);
+  console.log(fiveElOffset);
+  res.send(tasks);
 });
 
 module.exports = get;
