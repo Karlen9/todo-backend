@@ -1,11 +1,11 @@
 const router = require("express").Router();
-const User = require("../models/User");
+const { User } = require("../models");
 
 router.post("/register", async (req, res) => {
   const user = new User({
     id: req.body.id,
-    fname: req.body.firstName,
-    lname: req.body.lastName,
+    firstName: req.body.firstName,
+    lastName: req.body.lastName,
     email: req.body.email,
     password: req.body.password,
   });
