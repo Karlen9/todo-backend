@@ -29,3 +29,4 @@ app.use("/task", require("./task/task.delete"));
 app.use("/tasks", require("./task/task.get"));
 app.use("/task", require("./task/task.patch"));
 app.use("/user", require("./user/user.auth"));
+app.use("/user", require("./user/user.login"));
