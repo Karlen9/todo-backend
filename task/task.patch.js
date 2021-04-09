@@ -3,7 +3,7 @@ const Router = express.Router();
 const { body, validationResult } = require("express-validator");
 const { Item } = require("../models");
 
-const patch = Router.patch(
+const route = Router.patch(
   "/:id",
   body("name").optional().isString(),
   body("done").optional().isBoolean(),
@@ -43,4 +43,4 @@ const patch = Router.patch(
   }
 );
 
-module.exports = patch;
+module.exports = route;
