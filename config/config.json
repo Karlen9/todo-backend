@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "rvbbypadgobvli",
-    "password": "66e59ea7ffda8b3208648b210dea6b303d47e886ef63deec8212da701dcfb4b6",
-    "database": "dfljc1rabkddob",
-    "host": "ec2-54-74-77-126.eu-west-1.compute.amazonaws.com",
+    "username": "postgres",
+    "password": "user",
+    "database": "postgres",
+    "host": "localhost",
     "dialect": "postgres",
     "dialectOptions": {
       "ssl": {
