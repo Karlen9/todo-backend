@@ -4,7 +4,7 @@ const { Item } = require("../models");
 const Router = express.Router();
 
 const route = Router.post(
-  "/",
+  "/post",
   body("done").optional(),
   body("name").optional().isString(),
   check("name")

@@ -4,7 +4,7 @@ const { body, validationResult } = require("express-validator");
 const { Item } = require("../models");
 
 const route = Router.patch(
-  "/:id",
+  "/patch/:id",
   body("name").optional().isString(),
   body("done").optional().isBoolean(),
   async (req, res) => {
