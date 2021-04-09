@@ -16,19 +16,25 @@ const patch = Router.patch(
     }
 
     try {
-      if (req.body.name) {
-        const existingTask = await Item.findOne({
-          where: { name: req.body.name },
-        });
+      // if (req.body.name) {
+      //   const existingTask = await Item.findOne({
+      //     where: { name: req.body.name },
+      //   });
 
-        if (existingTask) throw new Error("Task name already in use");
-      }
+      //   if (existingTask) throw new Error("Task name already in use");
+      // }
 
-      const task = await Item.update(req.body, {
-        where: { id: req.params.id },
-        returning: true,
-        plain: true,
-      });
+      const task = await Item.update(
+        {
+          name: req.body.name,
+          done: req.body.done,
+        },
+        {
+          where: { id: req.params.id },
+          returning: true,
+          plain: true,
+        }
+      );
 
       res.send(task);
     } catch (error) {
