@@ -6,6 +6,7 @@ const { body, validationResult, check } = require("express-validator");
 const route = router.post(
   "/register",
   body("firstName").isString(),
+  check("email").trim().isEmail().withMessage("Please, write valid email"),
   check("firstName")
     .trim()
     .isLength({ min: 4, max: 50 })
@@ -13,12 +14,11 @@ const route = router.post(
   check("lastName")
     .trim()
     .isLength({ min: 4, max: 50 })
-    .withMessage("First name must be at least 4 char long"),
-  check("email").trim().isEmail().withMessage("Please, write valid email"),
+    .withMessage("Last name must be at least 4 char long"),
   check("password")
     .trim()
     .isLength({ min: 6 })
-    .withMessage("Password mute be at least 6 char long"),
+    .withMessage("Password must be at least 6 char long"),
   async (req, res) => {
     const errors = validationResult(req);
 
@@ -27,10 +27,10 @@ const route = router.post(
     }
 
     try {
-      const existEmail = User.findOne({ where: { email: req.body.email } });
-      if (existEmail) {
-        throw new Error("Email is already in use");
-      }
+      const existEmail = await User.findOne({
+        where: { email: req.body.email },
+      });
+      if (existEmail) throw new Error("Email is already in use");
 
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
@@ -42,12 +42,9 @@ const route = router.post(
         email: req.body.email,
         password: hashedPassword,
       });
-      try {
-        const savedUser = await user.save();
-        res.send(savedUser);
-      } catch (error) {
-        //res.status(400).json({ error: error.message });
-      }
+
+      const savedUser = await user.save();
+      res.send(savedUser);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
