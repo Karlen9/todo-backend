@@ -3,7 +3,7 @@ const { body, validationResult, check } = require("express-validator");
 const { Item } = require("../models");
 const Router = express.Router();
 
-const post = Router.post(
+const route = Router.post(
   "/",
   body("done").optional(),
   body("name").optional().isString(),
@@ -38,4 +38,4 @@ const post = Router.post(
   }
 );
 
-module.exports = post;
+module.exports = route;
