@@ -14,21 +14,27 @@ const route = router.post(
     if (!errors.isEmpty)
       return res.status(400).json({ errors: errors.array()[0].msg });
     const user = await User.findOne({ where: { email: req.body.email } });
-    if (!user) throw Error("Email or password is wrong");
 
     try {
-      if (!bcrypt.compare(req.body.password, user.password))
-        throw new Error("Email or password is wrong");
-      // if (!validPassword) {
-      //   res.send("Email or password is wrong");
+      if (!user) throw new Error("Email does now exists");
 
-      //   throw new Error("Email or password is wrong");
-      // }
-      console.log(user);
-      const token = jwt.sign({ id: user.id }, "secret", { expiresIn: 400 });
-      res.header("auth-token", token).send(token);
+      try {
+        if (!bcrypt.compare(req.body.password, user.password))
+          throw new Error("Password is wrong");
+        //console.log(user);
+        const accsessToken = generateAccsessToken(user);
+        const refreshToken = jwt.sign(user, "secret");
+
+        res.json({ accsessToken: accsessToken, refreshToken: refreshToken });
+      } catch (error) {
+        res.status(400).json({ error: error.message });
+      }
     } catch (error) {
-      //res.status(400).json({ error: error.message });
+      res.status(400).json({ error: error.message });
+    }
+
+    function generateAccsessToken(user) {
+      return jwt.sign(user, "secret", { expiresIn: "15" });
     }
   }
 );

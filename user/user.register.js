@@ -4,7 +4,7 @@ const bcrypt = require("bcryptjs");
 const { body, validationResult, check } = require("express-validator");
 
 const route = router.post(
-  "/auth",
+  "/register",
   body("firstName").isString(),
   check("email").trim().isEmail().withMessage("Please, write valid email"),
   check("firstName")
@@ -35,20 +35,20 @@ const route = router.post(
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(req.body.password, salt);
 
-      const user = new User({
-        id: req.body.id,
+      const user = await User.create({
+        //id: req.body.id,
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: hashedPassword,
       });
 
-      const savedUser = await user.save();
-      res.send(savedUser);
+      console.log(user);
+
+      res.send(user);
     } catch (error) {
       res.status(400).json({ error: error.message });
     }
-    //HASHING THE PASSWORD
   }
 );
 
