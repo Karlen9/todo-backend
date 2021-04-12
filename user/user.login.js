@@ -28,7 +28,7 @@ const route = router.post(
       const token = jwt.sign({ id: user.id }, "secret", { expiresIn: 400 });
       res.header("auth-token", token).send(token);
     } catch (error) {
-      res.status(400).json({ error: error.message });
+      //res.status(400).json({ error: error.message });
     }
   }
 );

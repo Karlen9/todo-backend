@@ -2,7 +2,9 @@ const express = require("express");
 const Router = express.Router();
 const { Item } = require("../models");
 
-const route = Router.get("/", async (req, res) => {
+const verify = require("../verifyToken");
+
+const route = Router.get("/get", verify, async (req, res) => {
   let sort = ["createdAt", "asc"];
   const filter = {};
   const fiveElOffset = (req.query.page - 1) * 5;
