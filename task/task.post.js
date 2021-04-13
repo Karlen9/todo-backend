@@ -2,9 +2,11 @@ const express = require("express");
 const { body, validationResult, check } = require("express-validator");
 const { Item } = require("../models");
 const Router = express.Router();
+const authorizationCheck = require("../authorizationCheck");
 
 const route = Router.post(
   "/post",
+  authorizationCheck,
   body("done").optional(),
   body("name").optional().isString(),
   check("name")
@@ -17,7 +19,6 @@ const route = Router.post(
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
-      console.log(errors.array()[0].msg);
       return res.status(400).json({ errors: errors.array()[0].msg });
     }
     try {

@@ -3,10 +3,10 @@ const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 const { body, validationResult, check } = require("express-validator");
 
-//JWT
-//Local config.js
-//Interceptors
-//Refactoring
+//0 JWT
+//0 Local config.js
+//1 Interceptors
+//0 Refactoring
 
 const route = router.post(
   "/register",
@@ -14,16 +14,16 @@ const route = router.post(
   check("email").trim().isEmail().withMessage("Please, write valid email"),
   check("firstName")
     .trim()
-    .isLength({ min: 4, max: 50 })
-    .withMessage("First name must be at least 4 char long"),
+    .isLength({ min: 1, max: 50 })
+    .withMessage("First name must be at least 1 char long"),
   check("lastName")
     .trim()
-    .isLength({ min: 4, max: 50 })
-    .withMessage("Last name must be at least 4 char long"),
+    .isLength({ min: 1, max: 50 })
+    .withMessage("Last name must be at least 1 char long"),
   check("password")
     .trim()
-    .isLength({ min: 6 })
-    .withMessage("Password must be at least 6 char long"),
+    .isLength({ min: 1 })
+    .withMessage("Password must be at least 1 char long"),
   async (req, res) => {
     const errors = validationResult(req);
 
@@ -49,8 +49,6 @@ const route = router.post(
         email: req.body.email,
         password: hashedPassword,
       });
-
-      console.log(user);
 
       res.send(user);
     } catch (error) {

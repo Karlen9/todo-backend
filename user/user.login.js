@@ -4,38 +4,37 @@ const dotenv = require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const { validationResult, check } = require("express-validator");
 const jwt = require("jsonwebtoken");
+const TOKEN_SECRET = process.env.TOKEN_SECRET;
+
+function generateAccsessToken(user) {
+  return jwt.sign(user, "secret", { expiresIn: "200s" });
+}
 
 const route = router.post(
   "/login",
   check("password").not().isEmpty().withMessage("Write password"),
   async (req, res) => {
     const errors = validationResult(req);
-    const TOKEN_SECRET = process.env.TOKEN_SECRET;
     if (!errors.isEmpty) {
       return res.status(400).json({ errors: errors.array()[0].msg });
     }
-    const user = await User.findOne({ where: { email: req.body.email } });
+    const currUser = await User.findOne({ where: { email: req.body.email } });
 
     try {
-      if (!user) throw new Error("Email does now exists");
+      if (!currUser) throw new Error("Email is already in use");
 
       try {
-        if (!bcrypt.compare(req.body.password, user.password))
-          throw new Error("Password is wrong");
-        //console.log(user);
-        const accsessToken = generateAccsessToken(user);
-        const refreshToken = jwt.sign(user, "secret");
+        if (!bcrypt.compare(req.body.password, currUser.password))
+          throw new Error("Wrong password");
+        const user = { id: currUser.id };
+        const accessToken = generateAccsessToken(user);
 
-        res.json({ accsessToken: accsessToken, refreshToken: refreshToken });
+        res.json({ accessToken: accessToken });
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
     } catch (error) {
       res.status(400).json({ error: error.message });
-    }
-
-    function generateAccsessToken(user) {
-      return jwt.sign(user, "secret", { expiresIn: "15" });
     }
   }
 );

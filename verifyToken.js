@@ -4,15 +4,15 @@ const SECRET = process.env.TOKEN_SECRET;
 
 module.exports = function (req, res, next) {
   const token = req.header("auth-token");
-  if (!token) return res.status(401).send("Access Denied");
+  if (!token) {
+    return res.status(401).send("Access Denied");
+  }
 
   try {
-    console.log(1);
-    const decoded = jwt.verify(token, "secret");
-    console.log(decoded);
-    req.user = decoded;
+    const verified = jwt.verify(token, "secret");
+    req.user = verified;
     next();
   } catch (error) {
-    res.status(400).send("Invalid Token");
+    res.status(401).json({ error: "Invalid Token" });
   }
 };

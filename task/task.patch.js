@@ -2,15 +2,16 @@ const express = require("express");
 const Router = express.Router();
 const { body, validationResult } = require("express-validator");
 const { Item } = require("../models");
+const authorizationCheck = require("../authorizationCheck");
 
 const route = Router.patch(
-  "/patch/:id",
+  "/patch",
+  authorizationCheck,
   body("name").optional().isString(),
   body("done").optional().isBoolean(),
   async (req, res) => {
     const errors = validationResult(req);
 
-    console.log(req.body);
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array()[0].msg });
     }
@@ -30,7 +31,7 @@ const route = Router.patch(
           done: req.body.done,
         },
         {
-          where: { id: req.params.id },
+          where: { id: req.query.id },
           returning: true,
           plain: true,
         }
