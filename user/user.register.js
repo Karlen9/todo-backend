@@ -3,6 +3,11 @@ const { User } = require("../models");
 const bcrypt = require("bcryptjs");
 const { body, validationResult, check } = require("express-validator");
 
+//JWT
+//Local config.js
+//Interceptors
+//Refactoring
+
 const route = router.post(
   "/register",
   body("firstName").isString(),
@@ -30,7 +35,9 @@ const route = router.post(
       const existEmail = await User.findOne({
         where: { email: req.body.email },
       });
-      if (existEmail) throw new Error("Email is already in use");
+      if (existEmail) {
+        throw new Error("Email is already in use");
+      }
 
       const salt = await bcrypt.genSalt(10);
       const hashedPassword = await bcrypt.hash(req.body.password, salt);

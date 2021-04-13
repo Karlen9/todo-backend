@@ -11,8 +11,9 @@ const route = router.post(
   async (req, res) => {
     const errors = validationResult(req);
     const TOKEN_SECRET = process.env.TOKEN_SECRET;
-    if (!errors.isEmpty)
+    if (!errors.isEmpty) {
       return res.status(400).json({ errors: errors.array()[0].msg });
+    }
     const user = await User.findOne({ where: { email: req.body.email } });
 
     try {
