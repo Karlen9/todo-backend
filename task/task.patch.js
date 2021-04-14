@@ -3,6 +3,7 @@ const Router = express.Router();
 const { body, validationResult } = require("express-validator");
 const { Item } = require("../models");
 const authorizationCheck = require("../authorizationCheck");
+const jwt = require("jsonwebtoken");
 
 const route = Router.patch(
   "/patch",
@@ -11,6 +12,9 @@ const route = Router.patch(
   body("done").optional().isBoolean(),
   async (req, res) => {
     const errors = validationResult(req);
+
+    const token = req.header("auth-token");
+    const id = jwt.decode(token).id;
 
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array()[0].msg });
@@ -31,7 +35,7 @@ const route = Router.patch(
           done: req.body.done,
         },
         {
-          where: { id: req.query.id },
+          where: { id: req.query.id, userId: id },
           returning: true,
           plain: true,
         }

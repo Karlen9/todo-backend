@@ -2,10 +2,15 @@ const express = require("express");
 const authorizationCheck = require("../authorizationCheck");
 const Router = express.Router();
 const { Item } = require("../models");
+const jwt = require("jsonwebtoken");
 
 const route = Router.get("/get", authorizationCheck, async (req, res) => {
+  const token = req.header("auth-token");
+  const id = jwt.decode(token).id;
+
   let sort = ["createdAt", "asc"];
   const filter = {};
+  filter.userId = id;
   const fiveElOffset = (req.query.page - 1) * 5;
   const amountOfElementsOnPage = 5;
 

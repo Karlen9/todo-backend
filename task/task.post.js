@@ -3,6 +3,7 @@ const { body, validationResult, check } = require("express-validator");
 const { Item } = require("../models");
 const Router = express.Router();
 const authorizationCheck = require("../authorizationCheck");
+const jwt = require("jsonwebtoken");
 
 const route = Router.post(
   "/post",
@@ -18,6 +19,9 @@ const route = Router.post(
   async (req, res) => {
     const errors = validationResult(req);
 
+    const token = req.header("auth-token");
+    const id = jwt.decode(token).id;
+
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array()[0].msg });
     }
@@ -30,6 +34,7 @@ const route = Router.post(
       const task = await Item.create({
         name: req.body.name.trim(),
         done: req.body.done,
+        userId: id,
       });
       res.send(task);
     } catch (error) {
