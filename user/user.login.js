@@ -20,21 +20,17 @@ const route = router.post(
     }
     const currUser = await User.findOne({ where: { email: req.body.email } });
 
-    try {
-      if (!currUser) throw new Error("Email is already in use");
-
-      try {
-        if (!bcrypt.compare(req.body.password, currUser.password))
-          throw new Error("Wrong password");
+    if (!currUser) {
+      res.status(400).json({ error: "No such user" });
+    } else {
+      if (!bcrypt.compareSync(req.body.password, currUser.password)) {
+        res.status(400).json({ error: "Invalid password" });
+      } else {
         const user = { id: currUser.id };
         const accessToken = generateAccsessToken(user);
 
         res.json({ accessToken: accessToken });
-      } catch (error) {
-        res.status(400).json({ error: error.message });
       }
-    } catch (error) {
-      res.status(400).json({ error: error.message });
     }
   }
 );

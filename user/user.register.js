@@ -10,16 +10,12 @@ const { body, validationResult, check } = require("express-validator");
 
 const route = router.post(
   "/register",
-  body("firstName").isString(),
+  body("name").isString(),
   check("email").trim().isEmail().withMessage("Please, write valid email"),
-  check("firstName")
+  check("name")
     .trim()
     .isLength({ min: 1, max: 50 })
-    .withMessage("First name must be at least 1 char long"),
-  check("lastName")
-    .trim()
-    .isLength({ min: 1, max: 50 })
-    .withMessage("Last name must be at least 1 char long"),
+    .withMessage("Name must be at least 1 char long"),
   check("password")
     .trim()
     .isLength({ min: 1 })
@@ -44,8 +40,7 @@ const route = router.post(
 
       const user = await User.create({
         //id: req.body.id,
-        firstName: req.body.firstName,
-        lastName: req.body.lastName,
+        name: req.body.firstName,
         email: req.body.email,
         password: hashedPassword,
       });
