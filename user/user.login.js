@@ -4,10 +4,10 @@ const dotenv = require("dotenv").config();
 const bcrypt = require("bcryptjs");
 const { validationResult, check } = require("express-validator");
 const jwt = require("jsonwebtoken");
-const TOKEN_SECRET = process.env.TOKEN_SECRET;
+const SECRET = process.env.TOKEN_SECRET;
 
 function generateAccsessToken(user) {
-  return jwt.sign(user, "secret", { expiresIn: "200s" });
+  return jwt.sign(user, SECRET, { expiresIn: "30s" });
 }
 
 const route = router.post(
