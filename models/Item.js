@@ -30,6 +30,9 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         defaultValue: DataTypes.UUIDV1,
       },
+      userId: {
+        type: DataTypes.UUID,
+      },
       done: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
