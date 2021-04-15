@@ -4,6 +4,8 @@ const { Item } = require("../models");
 const Router = express.Router();
 const authorizationCheck = require("../authorizationCheck");
 const jwt = require("jsonwebtoken");
+const validation = require("../validation");
+const getTokenId = require("../getTokenId");
 
 const route = Router.post(
   "/post",
@@ -17,15 +19,11 @@ const route = Router.post(
     .isLength({ min: 2, max: 30 })
     .withMessage("Must be at least 2 char long"),
   async (req, res) => {
-    const errors = validationResult(req);
+    //validation(req, res);
 
-    const token = req.header("auth-token");
-    const id = jwt.decode(token).id;
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array()[0].msg });
-    }
     try {
+      validation(req, res);
+
       const item = await Item.findOne({ where: { name: req.body.name } });
       if (item) {
         throw new Error("Task name is already in use");
@@ -34,7 +32,7 @@ const route = Router.post(
       const task = await Item.create({
         name: req.body.name.trim(),
         done: req.body.done,
-        userId: id,
+        userId: getTokenId(req),
       });
       res.send(task);
     } catch (error) {

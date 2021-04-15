@@ -1,29 +1,34 @@
 const express = require("express");
 const Router = express.Router();
-const { body, validationResult } = require("express-validator");
+const { body, check } = require("express-validator");
 const { Item } = require("../models");
 const authorizationCheck = require("../authorizationCheck");
+const validation = require("../validation");
 
 const route = Router.patch(
   "/patch",
   authorizationCheck,
   body("name").optional().isString(),
   body("done").optional().isBoolean(),
+  check("name")
+    .isAscii()
+    .trim()
+    .withMessage("Task must contains alphabets or numbers")
+    .isLength({ min: 2, max: 30 })
+    .withMessage("Must be at least 2 char long"),
   async (req, res) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array()[0].msg });
-    }
-
     try {
-      // if (req.body.name) {
-      //   const existingTask = await Item.findOne({
-      //     where: { name: req.body.name },
-      //   });
+      validation(req, res);
 
-      //   if (existingTask) throw new Error("Task name already in use");
-      // }
+      if (req.body.name) {
+        const existingTask = await Item.findOne({
+          where: { name: req.body.name },
+        });
+
+        if (existingTask) {
+          throw new Error("Task name already in use");
+        }
+      }
 
       const task = await Item.update(
         {

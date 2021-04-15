@@ -7,7 +7,7 @@ const jwt = require("jsonwebtoken");
 const SECRET = process.env.TOKEN_SECRET;
 
 function generateAccsessToken(user) {
-  return jwt.sign(user, SECRET, { expiresIn: "30s" });
+  return jwt.sign(user, SECRET, { expiresIn: "500s" });
 }
 
 const route = router.post(
