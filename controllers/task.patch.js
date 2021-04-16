@@ -20,15 +20,15 @@ const route = Router.patch(
     try {
       validation(req, res);
 
-      if (req.body.name) {
-        const existingTask = await Item.findOne({
-          where: { name: req.body.name },
-        });
+      // if (req.body.name) {
+      //   const existingTask = await Item.findOne({
+      //     where: { name: req.body.name },
+      //   });
 
-        if (existingTask) {
-          throw new Error("Task name already in use");
-        }
-      }
+      //   if (existingTask) {
+      //     throw new Error("Task name already in use");
+      //   }
+      // }
 
       const task = await Item.update(
         {

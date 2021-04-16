@@ -2,14 +2,13 @@ const jwt = require("jsonwebtoken");
 
 module.exports = function (req, res, next) {
   const token = req.header("auth-token");
+  const SECRET = process.env.TOKEN_SECRET;
 
-  const currTime = Math.floor(Date.now() / 1000);
+  const verifyToken = jwt.verify(token, SECRET);
 
-  const decodedToken = jwt.decode(token, { complete: true });
-  console.log(decodedToken);
-  if (decodedToken && decodedToken.payload.exp > currTime) {
-    next();
-  } else {
-    res.status(401).json({ error: "Invalid Token" });
+  if (!verifyToken && req.query.id !== verifyToken.id) {
+    return res.status(401).json({ error: "Invalid Token" });
   }
+
+  next();
 };

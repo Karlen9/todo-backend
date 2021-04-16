@@ -2,6 +2,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 
@@ -21,12 +22,24 @@ app.use(function (req, res, next) {
   );
   next();
 });
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use("/task", require("./task/task.post"));
-app.use("/task", require("./task/task.delete"));
-app.use("/tasks", require("./task/task.get"));
-app.use("/task", require("./task/task.patch"));
-app.use("/user", require("./user/user.register"));
-app.use("/user", require("./user/user.login"));
+
+const klawSync = require("klaw-sync");
+async function useControllers() {
+  const paths = klawSync("./controllers", { nodir: true });
+  let controllersCount = 0;
+  paths.forEach((file) => {
+    if (
+      path.basename(file.path)[0] === "_" ||
+      path.basename(file.path)[0] === "."
+    )
+      return;
+    app.use("/", require(file.path));
+    controllersCount++;
+  });
+
+  console.info(`Total controllers: ${controllersCount}`);
+}
+
+useControllers();

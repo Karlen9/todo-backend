@@ -1,9 +1,8 @@
 const express = require("express");
-const { body, validationResult, check } = require("express-validator");
+const { body, check } = require("express-validator");
 const { Item } = require("../models");
 const Router = express.Router();
 const authorizationCheck = require("../authorizationCheck");
-const jwt = require("jsonwebtoken");
 const validation = require("../validation");
 const getTokenId = require("../getTokenId");
 

@@ -1,12 +1,8 @@
 const router = require("express").Router();
 const { User } = require("../models");
 const bcrypt = require("bcryptjs");
-const { body, validationResult, check } = require("express-validator");
-
-//0 JWT
-//0 Local config.js
-//1 Interceptors
-//0 Refactoring
+const { body, check } = require("express-validator");
+const validation = require("../validation");
 
 const route = router.post(
   "/register",
@@ -21,13 +17,8 @@ const route = router.post(
     .isLength({ min: 1 })
     .withMessage("Password must be at least 1 char long"),
   async (req, res) => {
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array()[0].msg });
-    }
-
     try {
+      validation(req, res);
       const existEmail = await User.findOne({
         where: { email: req.body.email },
       });
